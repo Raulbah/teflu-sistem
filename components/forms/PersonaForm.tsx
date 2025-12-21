@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useTransition } from 'react';
+import { useTransition } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { createPersonaAction, updatePersonaAction } from '@/server/actions/persona-actions';
-import { Loader2, Plus, Upload } from 'lucide-react';
+import { Loader2} from 'lucide-react';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 

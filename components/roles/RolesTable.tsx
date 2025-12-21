@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Settings2, ShieldCheck, Users, MoreVertical, Pencil, Trash2, Key } from 'lucide-react';
+import { ShieldCheck, Users, MoreVertical, Pencil, Trash2, Key } from 'lucide-react';
 import { RolePermissionSheet } from './RolePermissionSheet';
 import { RoleForm } from '@/components/forms/RoleForm';
 import { UserPermissions } from '@/server/queries/permissions'; // Importamos el tipo

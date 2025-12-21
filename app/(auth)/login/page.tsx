@@ -21,7 +21,7 @@ export default function LoginPage() {
             <div className="hidden lg:flex flex-col justify-center bg-slate-900 text-white p-12">
                 <div className="max-w-md mx-auto space-y-4">
                     <blockquote className="text-lg font-medium italic">
-                        "Plataforma integral para la gestión eficiente de recursos humanos y operaciones internas."
+                        Plataforma integral para la gestion eficiente de recursos humanos y operaciones internas.
                     </blockquote>
                     <div className="flex items-center gap-4 mt-8">
                         <div className="h-1 w-8 bg-blue-500 rounded-full"></div>
