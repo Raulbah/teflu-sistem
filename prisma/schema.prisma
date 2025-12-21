@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Role {
+  id          Int       @id @default(autoincrement())
+  nombre      String    @unique // Admin, Supervisor, Operador
+  descripcion String?
+  personas    Persona[]
+  permisos    Permiso[]
+  estatus     Boolean   @default(true)
+}
+
+model Modulo {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  slug      String    @unique
+  icono     String?
+  orden     Int       @default(0)
+  estatus   Boolean   @default(true)
+  // Relación Jerárquica
+  parentId  Int?      // Campo opcional
+  parent    Modulo?   @relation("JerarquiaModulos", fields: [parentId], references: [id])
+  children  Modulo[]  @relation("JerarquiaModulos")
+  permisos  Permiso[]
+}
+
+model Permiso {
+  id        Int     @id @default(autoincrement())
+  rolId     Int
+  moduloId  Int
+  canRead   Boolean @default(false)
+  canWrite  Boolean @default(false)
+  canUpdate Boolean @default(false)
+  canDelete Boolean @default(false)
+
+  rol    Role   @relation(fields: [rolId], references: [id], onDelete: Cascade)
+  modulo Modulo @relation(fields: [moduloId], references: [id], onDelete: Cascade)
+
+  @@unique([rolId, moduloId]) // Un rol solo tiene un registro de permisos por módulo
+}
+
+// --- TU TABLA ORIGINAL (Respetada) ---
+
+model Persona {
+  idpersona        Int      @id @default(autoincrement())
+  nomina           String
+  nombres          String
+  apellido_paterno String
+  apellido_materno String?
+  puesto           String
+  telefono         String?
+  email_user       String   @unique
+  password         String
+  direccion        String?
+  img              String?
+  rolid            Int
+  role             Role     @relation(fields: [rolid], references: [id], onDelete: Cascade)
+  date_create      DateTime @default(now())
+  estatus          Boolean  @default(true)
+  date_delete      DateTime?
+}
