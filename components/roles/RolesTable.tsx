@@ -7,32 +7,39 @@ import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ShieldCheck, Users, MoreVertical, Pencil, Trash2, Key } from 'lucide-react';
 import { RolePermissionSheet } from './RolePermissionSheet';
-import { RoleForm } from '@/components/forms/RoleForm';
-import { UserPermissions } from '@/server/queries/permissions'; // Importamos el tipo
+// Asegúrate de que la ruta de importación sea correcta según tu estructura
+import { RoleForm } from '../forms/RoleForm'; 
+import { UserPermissions } from '@/server/queries/permissions'; 
 import { deleteRoleAction } from '@/server/actions/role-actions';
 import { toast } from 'sonner';
+import { Role } from '@/types'; 
 
 interface RolesTableProps {
-    roles: any[];
-    permissions: UserPermissions; // Recibimos permisos
+    roles: Role[];
+    permissions: UserPermissions;
 }
 
 export function RolesTable({ roles, permissions }: RolesTableProps) {
-    // Estado para Sheets y Modales
-    const [selectedRoleForPerms, setSelectedRoleForPerms] = useState<{id: number, nombre: string} | null>(null);
-    const [roleToEdit, setRoleToEdit] = useState<{id: number, nombre: string, descripcion: string | null} | null>(null);
+    // CORRECCIÓN 1: Usar el tipo Role para el estado (o un objeto parcial si solo guardas id/nombre)
+    // Aquí cambiamos a guardar todo el rol para evitar conflictos
+    const [selectedRoleForPerms, setSelectedRoleForPerms] = useState<Role | null>(null);
+
+    // CORRECCIÓN 2: Usar el tipo Role directamente. Esto soluciona tu error de 'assignable'.
+    const [roleToEdit, setRoleToEdit] = useState<Role | null>(null);
     
     const [openPermsSheet, setOpenPermsSheet] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
 
     // Handlers
-    const handleOpenPerms = (rol: any) => {
-        setSelectedRoleForPerms({ id: rol.id, nombre: rol.nombre });
+    const handleOpenPerms = (rol: Role) => {
+        // CORRECCIÓN 3: Pasar el objeto completo 'rol' en lugar de construir uno nuevo incompleto.
+        // Si construyes { id, nombre }, TypeScript se quejará de que faltan propiedades de 'Role'.
+        setSelectedRoleForPerms(rol);
         setOpenPermsSheet(true);
     };
 
-    const handleEdit = (rol: any) => {
-        setRoleToEdit(rol);
+    const handleEdit = (rol: Role) => {
+        setRoleToEdit(rol); // Ahora esto funciona porque ambos son tipo Role
         setOpenEditModal(true);
     };
 
@@ -64,10 +71,13 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                                     <ShieldCheck className="h-4 w-4 text-blue-600" />
                                     {rol.nombre}
                                 </TableCell>
-                                <TableCell className="text-slate-500 max-w-xs truncate">{rol.descripcion || '-'}</TableCell>
+                                <TableCell className="text-slate-500 max-w-xs truncate">
+                                    {rol.descripcion || '-'}
+                                </TableCell>
                                 <TableCell>
                                     <div className="flex items-center gap-2">
                                         <Users className="h-4 w-4 text-slate-400" />
+                                        {/* _count es opcional en el tipo Role, usamos ? y || 0 */}
                                         <span className="font-medium">{rol._count?.personas || 0}</span>
                                     </div>
                                 </TableCell>
@@ -78,7 +88,6 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                                 </TableCell>
                                 <TableCell className="text-right">
                                     <div className="flex justify-end gap-2">
-                                        {/* Botón Permisos (Siempre visible si tienes canRead, o condicionarlo a canUpdate) */}
                                         {permissions.canUpdate && (
                                             <Button 
                                                 variant="ghost" 
@@ -90,7 +99,6 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                                                 <Key className="h-4 w-4" />
                                             </Button>
                                         )}
-                                        {/* Menú de Acciones (Editar/Borrar) */}
                                         {(permissions.canUpdate || permissions.canDelete) && (
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
@@ -108,7 +116,7 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                                                         <DropdownMenuItem 
                                                             onClick={() => handleDelete(rol.id)}
                                                             className="text-red-600 focus:text-red-600"
-                                                            disabled={rol.nombre === 'Administrador' || rol._count.personas > 0}
+                                                            disabled={rol.nombre === 'Administrador' || (rol._count?.personas ?? 0) > 0}
                                                         >
                                                             <Trash2 className="mr-2 h-4 w-4" /> Eliminar
                                                         </DropdownMenuItem>
@@ -124,14 +132,13 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                 </Table>
             </div>
 
-            {/* Sheet de Permisos (Matriz) */}
             <RolePermissionSheet 
                 open={openPermsSheet} 
                 onOpenChange={setOpenPermsSheet}
                 roleId={selectedRoleForPerms?.id || null}
                 roleName={selectedRoleForPerms?.nombre || ''}
             />
-            {/* Modal de Edición (Reutilizado) */}
+
             <RoleForm 
                 open={openEditModal} 
                 onOpenChange={setOpenEditModal}

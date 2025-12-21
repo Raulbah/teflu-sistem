@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { Sidebar, MobileSidebar } from './Sidebar';
+import { ModuloItem } from '@/types';
+
 interface DashboardWrapperProps {
     children: React.ReactNode;
-    modules: any[];
+    modules: ModuloItem[]; // Cambio de any[]
 }
 
 export function DashboardWrapper({ children, modules }: DashboardWrapperProps) {

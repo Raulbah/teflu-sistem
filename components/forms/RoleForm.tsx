@@ -9,11 +9,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from 'lucide-react';
 import { createRoleAction, updateRoleInfoAction } from '@/server/actions/role-actions';
 import { toast } from 'sonner';
+import { Role } from '@/types';
 
 interface RoleFormProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    roleToEdit?: { id: number; nombre: string; descripcion: string | null } | null; // Si viene, es edición
+     roleToEdit?: Role | null; 
 }
 
 export function RoleForm({ open, onOpenChange, roleToEdit }: RoleFormProps) {

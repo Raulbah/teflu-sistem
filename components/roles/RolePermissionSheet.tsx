@@ -71,7 +71,7 @@ export function RolePermissionSheet({ roleId, roleName, open, onOpenChange }: Ro
     const handleCheck = (index: number, field: keyof MatrixRow, checked: boolean) => {
         const newMatrix = [...matrix];
         // @ts-ignore - TypeScript a veces se queja con claves dinámicas en objetos tipados estrictos
-        newMatrix[index][field] = checked;
+        newMatrix[index][field] = checked as never;
         setMatrix(newMatrix);
     };
 

@@ -10,6 +10,7 @@ import { Check, X, ShieldAlert, Loader2, Save } from 'lucide-react';
 // Importamos las acciones necesarias (asegúrate de agregar la que falta en el Paso 2)
 import { getRoles, getRolePermissionsMatrix, updatePersonaRole } from '@/server/actions/role-actions'; 
 import { toast } from 'sonner';
+import { PermisoMatrix } from '@/types';
 
 interface PermissionsModalProps {
     open: boolean;
@@ -28,7 +29,7 @@ export function PermissionsModal({
 }: PermissionsModalProps) {
     const [roles, setRoles] = useState<{id: number, nombre: string}[]>([]);
     const [selectedRol, setSelectedRol] = useState<string>(currentRolId.toString());
-    const [permissions, setPermissions] = useState<any[]>([]);
+    const [permissions, setPermissions] = useState<PermisoMatrix[]>([]);
     const [loadingData, setLoadingData] = useState(false);
     const [isPending, startTransition] = useTransition();
 
@@ -149,10 +150,10 @@ export function PermissionsModal({
                             </TableHeader>
                             <TableBody>
                             {permissions.map((perm) => (
-                                <TableRow key={perm.moduloId || perm.id} className="h-8">
+                                <TableRow key={perm.moduloId}>
                                     <TableCell className="py-1 text-xs font-medium text-slate-600">
                                         {/* Si tu query incluye el nombre del módulo úsalo, si no, usa el ID */}
-                                        {perm.modulo?.nombre || `Módulo ${perm.moduloId}`}
+                                        {perm.modulo?.nombre}
                                     </TableCell>
                                     <TableCell className="py-1 text-center"><StatusBadge active={perm.canRead} /></TableCell>
                                     <TableCell className="py-1 text-center"><StatusBadge active={perm.canWrite} /></TableCell>

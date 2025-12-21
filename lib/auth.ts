@@ -32,7 +32,7 @@ export async function getSession() {
     try {
         const { payload } = await jwtVerify(token, SECRET_KEY);
         return payload as { sub: string; role: string };
-    } catch (error) {
+    } catch { // Quitar la variable (error) si no se usa
         return null;
     }
 }

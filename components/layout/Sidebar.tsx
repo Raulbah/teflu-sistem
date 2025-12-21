@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { logoutAction } from '@/server/actions/auth-actions';
+import { ModuloItem } from '@/types';
 
 // Mapeo de Iconos
 const iconMap: Record<string, any> = {
@@ -109,7 +110,7 @@ function NavGroup({ item, isCollapsed, pathname }: any) {
 }
 
 // 2. Item Simple (Sin hijos)
-function NavItem({ item, isCollapsed, pathname }: any) {
+function NavItem({ item, isCollapsed, pathname }: { item: ModuloItem, isCollapsed: boolean, pathname: string }) {
     const Icon = iconMap[item.icono || 'package'] || Package;
     const href = item.slug === 'dashboard' ? '/dashboard' : `/${item.slug}`;
     const isActive = pathname === href;
@@ -150,9 +151,14 @@ function NavItem({ item, isCollapsed, pathname }: any) {
         </Link>
     );
 }
+interface SidebarProps {
+    modules: ModuloItem[]; // No any[]
+    isCollapsed: boolean;
+    toggleSidebar: () => void;
+}
 
 // --- COMPONENTE PRINCIPAL SIDEBAR ---
-export function Sidebar({ modules, isCollapsed, toggleSidebar }: any) {
+export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
     const pathname = usePathname();
 
     return (
@@ -188,9 +194,9 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: any) {
 
             <ScrollArea className="flex-1 py-4">
                 <nav className="grid gap-1 px-2">
-                {modules.map((mod: any) => {
-                    if (mod.children && mod.children.length > 0) {
-                    return <NavGroup key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
+                    {modules.map((mod) => {
+                        if (mod.children && mod.children.length > 0) {
+                        return <NavGroup key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
                     }
                     return <NavItem key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
                 })}
@@ -224,7 +230,7 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: any) {
 }
 
 // --- COMPONENTE MOBILE SIDEBAR (EL QUE FALTABA) ---
-export function MobileSidebar({ modules }: { modules: any[] }) {
+export function MobileSidebar({ modules }: { modules: ModuloItem[] }) {
     const [open, setOpen] = useState(false);
     return (
         <Sheet open={open} onOpenChange={setOpen}>

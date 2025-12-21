@@ -19,8 +19,8 @@ interface RoleOption {
 interface PersonaFormProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    personaToEdit?: any | null; // Objeto persona completo si es edición
-    roles: RoleOption[]; // Pasamos los roles disponibles como prop
+    personaToEdit?: any | null; // Puedes dejarlo asi temporalmente o definir interfaz Persona
+    roles: { id: number; nombre: string }[]; // Especificar tipo en vez de any (RoleOption)
 }
 
 export function PersonaForm({ open, onOpenChange, personaToEdit, roles }: PersonaFormProps) {
