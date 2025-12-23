@@ -10,18 +10,29 @@ import { Loader2} from 'lucide-react';
 import { toast } from 'sonner';
 import { Label } from '@/components/ui/label';
 
-// Tipos para props
-interface RoleOption {
-    id: number;
-    nombre: string;
-}
-
 interface PersonaFormProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    personaToEdit?: any | null; // Puedes dejarlo asi temporalmente o definir interfaz Persona
-    roles: { id: number; nombre: string }[]; // Especificar tipo en vez de any (RoleOption)
+    
+    // Definimos una forma flexible para la edición para evitar 'any'
+    personaToEdit?: {
+        idpersona: number;
+        nomina: string;
+        nombres: string;
+        apellido_paterno: string;
+        apellido_materno?: string | null;
+        puesto: string;
+        email_user: string;
+        telefono?: string | null;
+        direccion?: string | null;
+        rolid: number;
+        img?: string | null;
+    } | null;
+
+    // Roles tipados
+    roles: { id: number; nombre: string }[]; 
 }
+
 
 export function PersonaForm({ open, onOpenChange, personaToEdit, roles }: PersonaFormProps) {
     const [isPending, startTransition] = useTransition();

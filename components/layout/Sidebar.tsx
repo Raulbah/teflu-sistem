@@ -39,7 +39,7 @@ const iconMap: Record<string, any> = {
 // --- SUBCOMPONENTES DE NAVEGACIÓN ---
 
 // 1. Item con Submenús (Padre)
-function NavGroup({ item, isCollapsed, pathname }: any) {
+function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollapsed: boolean; pathname: string }) {
     const Icon = iconMap[item.icono || 'package'] || Package;
     const isActiveGroup = pathname.startsWith(`/${item.slug}`); 
     const [isOpen, setIsOpen] = useState(isActiveGroup);
@@ -110,7 +110,7 @@ function NavGroup({ item, isCollapsed, pathname }: any) {
 }
 
 // 2. Item Simple (Sin hijos)
-function NavItem({ item, isCollapsed, pathname }: { item: ModuloItem, isCollapsed: boolean, pathname: string }) {
+function NavItem({ item, isCollapsed, pathname }: { item: ModuloItem; isCollapsed: boolean; pathname: string }) {
     const Icon = iconMap[item.icono || 'package'] || Package;
     const href = item.slug === 'dashboard' ? '/dashboard' : `/${item.slug}`;
     const isActive = pathname === href;

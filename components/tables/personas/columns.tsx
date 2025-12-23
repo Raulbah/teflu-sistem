@@ -1,6 +1,6 @@
 'use client';
 
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -30,9 +30,16 @@ export type PersonaCol = {
     role: { id: number; nombre: string };
 };
 
+interface ActionsCellProps {
+    row: Row<PersonaCol>; // <--- Tipado estricto
+    permissions: UserPermissions;
+    onEdit: (p: PersonaCol) => void;
+}
+
+
 // --- COMPONENTE EXTRAÍDO (SOLUCIONA EL ERROR DE HOOKS) ---
-const ActionsCell = ({ row, permissions, onEdit }: { row: any; permissions: UserPermissions; onEdit: (p: PersonaCol) => void }) => {
-    const persona = row.original as PersonaCol;
+const ActionsCell = ({ row, permissions, onEdit }: ActionsCellProps) => {
+    const persona = row.original; 
     const [openPermissions, setOpenPermissions] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
 

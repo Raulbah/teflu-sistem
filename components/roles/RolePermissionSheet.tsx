@@ -60,19 +60,24 @@ export function RolePermissionSheet({ roleId, roleName, open, onOpenChange }: Ro
             });
 
             setMatrix(initialMatrix);
-        } catch (error) {
+        } catch {
             toast.error("Error cargando permisos");
         } finally {
             setLoading(false);
-        }
+        }   
     };
 
     // Manejar cambios en los checkboxes
     const handleCheck = (index: number, field: keyof MatrixRow, checked: boolean) => {
-        const newMatrix = [...matrix];
-        // @ts-ignore - TypeScript a veces se queja con claves dinámicas en objetos tipados estrictos
-        newMatrix[index][field] = checked as never;
-        setMatrix(newMatrix);
+        setMatrix(prev => {
+            const newMatrix = [...prev];
+            // Creamos una copia de la fila modificando solo el campo field
+            newMatrix[index] = { 
+                ...newMatrix[index], 
+                [field]: checked 
+            };
+            return newMatrix;
+        });
     };
 
     // Guardar cambios
