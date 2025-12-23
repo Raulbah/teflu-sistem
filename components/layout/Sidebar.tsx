@@ -21,7 +21,9 @@ import {
     ShieldCheck,
     Users,
     Menu,
-    LucideIcon  // Importante para Mobile
+    LucideIcon,
+    LayoutList,
+    HardHat
 } from 'lucide-react';
 import { useState } from 'react';
 import { logoutAction } from '@/server/actions/auth-actions';
@@ -34,6 +36,8 @@ const iconMap: Record<string, LucideIcon> = {
     'settings': Settings,
     'shield-check': ShieldCheck,
     'users': Users,
+    'layout-list': LayoutList,
+    'hard-hat': HardHat
 };
 
 // --- SUBCOMPONENTES DE NAVEGACIÓN ---
@@ -53,7 +57,7 @@ function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollaps
                 href={`/${item.slug}`} 
                 className={cn(
                     "flex justify-center p-2 rounded-md transition-colors",
-                    isActiveGroup ? "bg-blue-50 text-blue-600" : "text-slate-500 hover:bg-slate-100"
+                    isActiveGroup ? "bg-red-50 text-red-700" : "text-slate-500 hover:bg-slate-100"
                 )}
                 >
                 <Icon className="h-5 w-5" />
