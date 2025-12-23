@@ -1,5 +1,6 @@
 'use client';
 
+import { DeleteConfirmation } from "@/components/ui/delete-confirmation";
 import { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,9 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
     // CORRECCIÓN 1: Usar el tipo Role para el estado (o un objeto parcial si solo guardas id/nombre)
     // Aquí cambiamos a guardar todo el rol para evitar conflictos
     const [selectedRoleForPerms, setSelectedRoleForPerms] = useState<Role | null>(null);
-
+    // NUEVOS ESTADOS PARA BORRADO
+    const [roleToDelete, setRoleToDelete] = useState<number | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
     // CORRECCIÓN 2: Usar el tipo Role directamente. Esto soluciona tu error de 'assignable'.
     const [roleToEdit, setRoleToEdit] = useState<Role | null>(null);
     
@@ -43,12 +46,23 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
         setOpenEditModal(true);
     };
 
-    const handleDelete = async (id: number) => {
-        if (!confirm('¿Estás seguro de eliminar este rol? Esta acción no se puede deshacer.')) return;
+    const confirmDelete = (id: number) => {
+        setRoleToDelete(id);
+    };
+
+    const executeDelete = async () => {
+        if (!roleToDelete) return;
         
-        const res = await deleteRoleAction(id);
-        if (res.error) toast.error(res.error);
-        else toast.success('Rol eliminado');
+        setIsDeleting(true);
+        const res = await deleteRoleAction(roleToDelete);
+        setIsDeleting(false);
+
+        if (res.error) {
+            toast.error(res.error);
+        } else {
+            toast.success('Rol eliminado correctamente');
+            setRoleToDelete(null); // Cerrar modal
+        }
     };
 
     return (
@@ -114,7 +128,7 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                                                     )}
                                                     {permissions.canDelete && (
                                                         <DropdownMenuItem 
-                                                            onClick={() => handleDelete(rol.id)}
+                                                            onClick={() => confirmDelete(rol.id)}
                                                             className="text-red-600 focus:text-red-600"
                                                             disabled={rol.nombre === 'Administrador' || (rol._count?.personas ?? 0) > 0}
                                                         >
@@ -143,6 +157,14 @@ export function RolesTable({ roles, permissions }: RolesTableProps) {
                 open={openEditModal} 
                 onOpenChange={setOpenEditModal}
                 roleToEdit={roleToEdit}
+            />
+            <DeleteConfirmation 
+                open={!!roleToDelete} 
+                onOpenChange={(open) => !open && setRoleToDelete(null)}
+                onConfirm={executeDelete}
+                isDeleting={isDeleting}
+                title="¿Eliminar este Rol?"
+                description="Si eliminas este rol, la acción será irreversible. Asegúrate de que no haya usuarios activos dependiendo de él."
             />
         </>
     );

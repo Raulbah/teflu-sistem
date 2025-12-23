@@ -48,7 +48,7 @@ const loginSchema = z.object({
         console.error("Login error:", error);
         return { message: 'Error interno del servidor.' };
     }
-    redirect('/dashboard');
+        redirect('/dashboard/oee');
     }
 
     // --- ESTA ES LA FUNCIÓN QUE FALTABA ---

@@ -28,6 +28,7 @@ import {
 import { useState } from 'react';
 import { logoutAction } from '@/server/actions/auth-actions';
 import { ModuloItem } from '@/types';
+import { DeleteConfirmation } from "@/components/ui/delete-confirmation";
 
 // Mapeo de Iconos
 const iconMap: Record<string, LucideIcon> = {
@@ -164,6 +165,15 @@ interface SidebarProps {
 // --- COMPONENTE PRINCIPAL SIDEBAR ---
 export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
     const pathname = usePathname();
+    
+    // 1. Estado para controlar la alerta de logout
+    const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        await logoutAction(); // Tu Server Action existente
+        // No necesitamos setIsLoggingOut(false) porque la página redirigirá
+    };
 
     return (
         <div className={cn(
@@ -208,12 +218,15 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
             </ScrollArea>
 
             <div className="p-2 border-t border-slate-100">
-                <form action={logoutAction}>
-                    <Button variant="ghost" className={cn("w-full text-red-500", isCollapsed ? "justify-center" : "justify-start gap-3")}>
+                {/* Quitamos el <form> y usamos onClick directo */}
+                <Button 
+                    variant="ghost" 
+                    className={cn("w-full text-red-500 hover:text-red-600 hover:bg-red-50", isCollapsed ? "justify-center" : "justify-start gap-3")}
+                    onClick={() => setShowLogoutAlert(true)}
+                >
                     <LogOut className="h-5 w-5" />
-                    {!isCollapsed && <span>Salir</span>}
-                    </Button>
-                </form>
+                    {!isCollapsed && <span>Cerrar Sesión</span>}
+                </Button>
             </div>
             
             {/* Botón flotante para expandir si está colapsado */}
@@ -229,6 +242,16 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
                 </Button>
                 </div>
             )}
+            <DeleteConfirmation 
+                open={showLogoutAlert}
+                onOpenChange={setShowLogoutAlert}
+                onConfirm={handleLogout}
+                isDeleting={isLoggingOut}
+                title="¿Cerrar Sesión?"
+                description="Tendrás que ingresar tus credenciales nuevamente para acceder al sistema."
+                confirmText="Sí, salir"
+                variant="default" // O 'destructive' si prefieres rojo
+            />
         </div>
     );
 }
