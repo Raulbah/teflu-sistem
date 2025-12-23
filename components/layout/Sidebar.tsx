@@ -20,20 +20,20 @@ import {
     Circle,
     ShieldCheck,
     Users,
-  Menu // Importante para Mobile
+    Menu,
+    LucideIcon  // Importante para Mobile
 } from 'lucide-react';
 import { useState } from 'react';
 import { logoutAction } from '@/server/actions/auth-actions';
 import { ModuloItem } from '@/types';
 
 // Mapeo de Iconos
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, LucideIcon> = {
     'layout-dashboard': LayoutDashboard,
     'package': Package,
     'settings': Settings,
     'shield-check': ShieldCheck,
     'users': Users,
-  // Agrega más según tus necesidades
 };
 
 // --- SUBCOMPONENTES DE NAVEGACIÓN ---
@@ -84,7 +84,7 @@ function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollaps
             </CollapsibleTrigger>
             
             <CollapsibleContent className="pl-4 space-y-1 py-1">
-                {item.children?.map((child: any) => {
+                {item.children?.map((child) => { 
                     const href = `/${child.slug}`; 
                     const isChildActive = pathname === href;
 
