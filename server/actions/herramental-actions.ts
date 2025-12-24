@@ -6,6 +6,7 @@ import { requireAuth } from '@/lib/auth';
 import { getTurnoActual } from '@/lib/turnos';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
+import { getModulePermissions } from '../queries/permissions';
 
 // --- VALIDACIONES ---
 const herramentalSchema = z.object({
@@ -85,6 +86,10 @@ export async function registrarEscaneoAction(codigo: string) {
 
 export async function createHerramentalAction(formData: FormData) {
     await requireAuth();
+
+    const perms = await getModulePermissions('inventarios/herramentales');
+    if (!perms.canWrite) return { error: "Acceso denegado: No tienes permiso para crear herramientas." };
+    
     const raw = Object.fromEntries(formData);
     const valid = herramentalSchema.safeParse(raw);
 
@@ -122,6 +127,10 @@ export async function createHerramentalAction(formData: FormData) {
 // --- NUEVA: ACTUALIZAR ---
 export async function updateHerramentalAction(id: number, formData: FormData) {
     await requireAuth();
+
+    const perms = await getModulePermissions('inventarios/herramentales');
+    if (!perms.canUpdate) return { error: "Acceso denegado: No tienes permiso para editar." };
+
     const raw = Object.fromEntries(formData);
     const valid = herramentalSchema.safeParse(raw);
 
@@ -159,6 +168,8 @@ export async function updateHerramentalAction(id: number, formData: FormData) {
 
 export async function deleteHerramentalAction(id: number) {
     await requireAuth();
+    const perms = await getModulePermissions('inventarios/herramentales');
+    if (!perms.canDelete) return { error: "Acceso denegado: No tienes permiso para eliminar." };
     try {
         await prisma.herramental.update({
             where: { id },

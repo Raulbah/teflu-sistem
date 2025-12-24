@@ -85,7 +85,18 @@ export function RolePermissionSheet({ roleId, roleName, open, onOpenChange }: Ro
         if (!roleId) return;
 
         startTransition(async () => {
-            const res = await updateRolePermissions(roleId, matrix);
+            // LIMPIEZA DE DATOS: 
+            // Solo enviamos lo que el servidor espera, quitamos 'moduloName' u otros campos extra
+            const payload = matrix.map(m => ({
+                moduloId: m.moduloId,
+                canRead: m.canRead,
+                canWrite: m.canWrite,
+                canUpdate: m.canUpdate,
+                canDelete: m.canDelete
+            }));
+
+            const res = await updateRolePermissions(roleId, payload);
+            
             if (res.error) {
                 toast.error(res.error);
             } else {
@@ -94,6 +105,7 @@ export function RolePermissionSheet({ roleId, roleName, open, onOpenChange }: Ro
             }
         });
     };
+
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
