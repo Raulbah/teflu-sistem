@@ -25,3 +25,11 @@ export interface PermisoMatrix {
     canUpdate: boolean;
     canDelete: boolean;
 }
+
+export interface UserProfile {
+    nombres: string;
+    apellido_paterno: string;
+    email_user: string;
+    img: string | null;
+    puesto: string;
+}

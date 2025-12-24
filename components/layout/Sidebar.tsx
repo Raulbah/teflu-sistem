@@ -47,16 +47,20 @@ function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollaps
     const isActiveGroup = pathname.startsWith(`/${item.slug}`); 
     const [isOpen, setIsOpen] = useState(isActiveGroup);
 
+    const firstChildHref = item.children && item.children.length > 0 
+        ? `/${item.children[0].slug}` 
+        : '#';
+    
     if (isCollapsed) {
         return (
         <TooltipProvider delayDuration={0}>
             <Tooltip>
             <TooltipTrigger asChild>
                 <Link 
-                href={`/${item.slug}`} 
-                className={cn(
-                    "flex justify-center p-2 rounded-md transition-colors",
-                    isActiveGroup ? "bg-red-50 text-red-700" : "text-slate-500 hover:bg-slate-100"
+                    href={firstChildHref}
+                    className={cn(
+                        "flex justify-center p-2 rounded-md transition-colors",
+                        isActiveGroup ? "bg-red-50 text-red-700" : "text-slate-500 hover:bg-slate-100"
                 )}
                 >
                 <Icon className="h-5 w-5" />

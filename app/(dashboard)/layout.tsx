@@ -1,4 +1,5 @@
 import { getSidebarData } from '@/server/queries/navigation';
+import { getUserProfile } from '@/server/queries/user'; // <--- IMPORTAR
 import { requireAuth } from '@/lib/auth';
 import { DashboardWrapper } from '@/components/layout/DashboardWrapper';
 
@@ -7,15 +8,16 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-  // 1. Verificación de Seguridad en Servidor
     await requireAuth();
     
-    // 2. Obtener datos de navegación (Optimizado con cache de React por defecto)
-    const modules = await getSidebarData();
+    // Ejecutamos las consultas en paralelo para no perder performance
+    const [modules, user] = await Promise.all([
+        getSidebarData(),
+        getUserProfile() // <--- OBTENER USUARIO
+    ]);
 
-    // 3. Renderizar el Wrapper Cliente
     return (
-        <DashboardWrapper modules={modules}>
+        <DashboardWrapper modules={modules} user={user}>
             {children}
         </DashboardWrapper>
     );
