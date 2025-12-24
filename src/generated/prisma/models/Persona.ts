@@ -301,6 +301,7 @@ export type PersonaWhereInput = {
   estatus?: Prisma.BoolFilter<"Persona"> | boolean
   date_delete?: Prisma.DateTimeNullableFilter<"Persona"> | Date | string | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  registrosInventario?: Prisma.RegistroInventarioListRelationFilter
 }
 
 export type PersonaOrderByWithRelationInput = {
@@ -320,6 +321,7 @@ export type PersonaOrderByWithRelationInput = {
   estatus?: Prisma.SortOrder
   date_delete?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.RoleOrderByWithRelationInput
+  registrosInventario?: Prisma.RegistroInventarioOrderByRelationAggregateInput
 }
 
 export type PersonaWhereUniqueInput = Prisma.AtLeast<{
@@ -342,6 +344,7 @@ export type PersonaWhereUniqueInput = Prisma.AtLeast<{
   estatus?: Prisma.BoolFilter<"Persona"> | boolean
   date_delete?: Prisma.DateTimeNullableFilter<"Persona"> | Date | string | null
   role?: Prisma.XOR<Prisma.RoleScalarRelationFilter, Prisma.RoleWhereInput>
+  registrosInventario?: Prisma.RegistroInventarioListRelationFilter
 }, "idpersona" | "email_user">
 
 export type PersonaOrderByWithAggregationInput = {
@@ -403,6 +406,7 @@ export type PersonaCreateInput = {
   estatus?: boolean
   date_delete?: Date | string | null
   role: Prisma.RoleCreateNestedOneWithoutPersonasInput
+  registrosInventario?: Prisma.RegistroInventarioCreateNestedManyWithoutUsuarioInput
 }
 
 export type PersonaUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type PersonaUncheckedCreateInput = {
   date_create?: Date | string
   estatus?: boolean
   date_delete?: Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type PersonaUpdateInput = {
@@ -438,6 +443,7 @@ export type PersonaUpdateInput = {
   estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.RoleUpdateOneRequiredWithoutPersonasNestedInput
+  registrosInventario?: Prisma.RegistroInventarioUpdateManyWithoutUsuarioNestedInput
 }
 
 export type PersonaUncheckedUpdateInput = {
@@ -456,6 +462,7 @@ export type PersonaUncheckedUpdateInput = {
   date_create?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type PersonaCreateManyInput = {
@@ -584,6 +591,11 @@ export type PersonaSumOrderByAggregateInput = {
   rolid?: Prisma.SortOrder
 }
 
+export type PersonaScalarRelationFilter = {
+  is?: Prisma.PersonaWhereInput
+  isNot?: Prisma.PersonaWhereInput
+}
+
 export type PersonaCreateNestedManyWithoutRoleInput = {
   create?: Prisma.XOR<Prisma.PersonaCreateWithoutRoleInput, Prisma.PersonaUncheckedCreateWithoutRoleInput> | Prisma.PersonaCreateWithoutRoleInput[] | Prisma.PersonaUncheckedCreateWithoutRoleInput[]
   connectOrCreate?: Prisma.PersonaCreateOrConnectWithoutRoleInput | Prisma.PersonaCreateOrConnectWithoutRoleInput[]
@@ -634,6 +646,20 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type PersonaCreateNestedOneWithoutRegistrosInventarioInput = {
+  create?: Prisma.XOR<Prisma.PersonaCreateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedCreateWithoutRegistrosInventarioInput>
+  connectOrCreate?: Prisma.PersonaCreateOrConnectWithoutRegistrosInventarioInput
+  connect?: Prisma.PersonaWhereUniqueInput
+}
+
+export type PersonaUpdateOneRequiredWithoutRegistrosInventarioNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonaCreateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedCreateWithoutRegistrosInventarioInput>
+  connectOrCreate?: Prisma.PersonaCreateOrConnectWithoutRegistrosInventarioInput
+  upsert?: Prisma.PersonaUpsertWithoutRegistrosInventarioInput
+  connect?: Prisma.PersonaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonaUpdateToOneWithWhereWithoutRegistrosInventarioInput, Prisma.PersonaUpdateWithoutRegistrosInventarioInput>, Prisma.PersonaUncheckedUpdateWithoutRegistrosInventarioInput>
+}
+
 export type PersonaCreateWithoutRoleInput = {
   nomina: string
   nombres: string
@@ -648,6 +674,7 @@ export type PersonaCreateWithoutRoleInput = {
   date_create?: Date | string
   estatus?: boolean
   date_delete?: Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioCreateNestedManyWithoutUsuarioInput
 }
 
 export type PersonaUncheckedCreateWithoutRoleInput = {
@@ -665,6 +692,7 @@ export type PersonaUncheckedCreateWithoutRoleInput = {
   date_create?: Date | string
   estatus?: boolean
   date_delete?: Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type PersonaCreateOrConnectWithoutRoleInput = {
@@ -714,6 +742,92 @@ export type PersonaScalarWhereInput = {
   date_delete?: Prisma.DateTimeNullableFilter<"Persona"> | Date | string | null
 }
 
+export type PersonaCreateWithoutRegistrosInventarioInput = {
+  nomina: string
+  nombres: string
+  apellido_paterno: string
+  apellido_materno?: string | null
+  puesto: string
+  telefono?: string | null
+  email_user: string
+  password: string
+  direccion?: string | null
+  img?: string | null
+  date_create?: Date | string
+  estatus?: boolean
+  date_delete?: Date | string | null
+  role: Prisma.RoleCreateNestedOneWithoutPersonasInput
+}
+
+export type PersonaUncheckedCreateWithoutRegistrosInventarioInput = {
+  idpersona?: number
+  nomina: string
+  nombres: string
+  apellido_paterno: string
+  apellido_materno?: string | null
+  puesto: string
+  telefono?: string | null
+  email_user: string
+  password: string
+  direccion?: string | null
+  img?: string | null
+  rolid: number
+  date_create?: Date | string
+  estatus?: boolean
+  date_delete?: Date | string | null
+}
+
+export type PersonaCreateOrConnectWithoutRegistrosInventarioInput = {
+  where: Prisma.PersonaWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonaCreateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedCreateWithoutRegistrosInventarioInput>
+}
+
+export type PersonaUpsertWithoutRegistrosInventarioInput = {
+  update: Prisma.XOR<Prisma.PersonaUpdateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedUpdateWithoutRegistrosInventarioInput>
+  create: Prisma.XOR<Prisma.PersonaCreateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedCreateWithoutRegistrosInventarioInput>
+  where?: Prisma.PersonaWhereInput
+}
+
+export type PersonaUpdateToOneWithWhereWithoutRegistrosInventarioInput = {
+  where?: Prisma.PersonaWhereInput
+  data: Prisma.XOR<Prisma.PersonaUpdateWithoutRegistrosInventarioInput, Prisma.PersonaUncheckedUpdateWithoutRegistrosInventarioInput>
+}
+
+export type PersonaUpdateWithoutRegistrosInventarioInput = {
+  nomina?: Prisma.StringFieldUpdateOperationsInput | string
+  nombres?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido_paterno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido_materno?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  puesto?: Prisma.StringFieldUpdateOperationsInput | string
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_user?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  img?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date_create?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.RoleUpdateOneRequiredWithoutPersonasNestedInput
+}
+
+export type PersonaUncheckedUpdateWithoutRegistrosInventarioInput = {
+  idpersona?: Prisma.IntFieldUpdateOperationsInput | number
+  nomina?: Prisma.StringFieldUpdateOperationsInput | string
+  nombres?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido_paterno?: Prisma.StringFieldUpdateOperationsInput | string
+  apellido_materno?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  puesto?: Prisma.StringFieldUpdateOperationsInput | string
+  telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email_user?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  img?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rolid?: Prisma.IntFieldUpdateOperationsInput | number
+  date_create?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
 export type PersonaCreateManyRoleInput = {
   idpersona?: number
   nomina: string
@@ -745,6 +859,7 @@ export type PersonaUpdateWithoutRoleInput = {
   date_create?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioUpdateManyWithoutUsuarioNestedInput
 }
 
 export type PersonaUncheckedUpdateWithoutRoleInput = {
@@ -762,6 +877,7 @@ export type PersonaUncheckedUpdateWithoutRoleInput = {
   date_create?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   estatus?: Prisma.BoolFieldUpdateOperationsInput | boolean
   date_delete?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrosInventario?: Prisma.RegistroInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type PersonaUncheckedUpdateManyWithoutRoleInput = {
@@ -782,6 +898,35 @@ export type PersonaUncheckedUpdateManyWithoutRoleInput = {
 }
 
 
+/**
+ * Count Type PersonaCountOutputType
+ */
+
+export type PersonaCountOutputType = {
+  registrosInventario: number
+}
+
+export type PersonaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  registrosInventario?: boolean | PersonaCountOutputTypeCountRegistrosInventarioArgs
+}
+
+/**
+ * PersonaCountOutputType without action
+ */
+export type PersonaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PersonaCountOutputType
+   */
+  select?: Prisma.PersonaCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * PersonaCountOutputType without action
+ */
+export type PersonaCountOutputTypeCountRegistrosInventarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RegistroInventarioWhereInput
+}
+
 
 export type PersonaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   idpersona?: boolean
@@ -800,6 +945,8 @@ export type PersonaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   estatus?: boolean
   date_delete?: boolean
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  registrosInventario?: boolean | Prisma.Persona$registrosInventarioArgs<ExtArgs>
+  _count?: boolean | Prisma.PersonaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["persona"]>
 
 export type PersonaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -861,6 +1008,8 @@ export type PersonaSelectScalar = {
 export type PersonaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"idpersona" | "nomina" | "nombres" | "apellido_paterno" | "apellido_materno" | "puesto" | "telefono" | "email_user" | "password" | "direccion" | "img" | "rolid" | "date_create" | "estatus" | "date_delete", ExtArgs["result"]["persona"]>
 export type PersonaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
+  registrosInventario?: boolean | Prisma.Persona$registrosInventarioArgs<ExtArgs>
+  _count?: boolean | Prisma.PersonaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PersonaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   role?: boolean | Prisma.RoleDefaultArgs<ExtArgs>
@@ -873,6 +1022,7 @@ export type $PersonaPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Persona"
   objects: {
     role: Prisma.$RolePayload<ExtArgs>
+    registrosInventario: Prisma.$RegistroInventarioPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     idpersona: number
@@ -1285,6 +1435,7 @@ readonly fields: PersonaFieldRefs;
 export interface Prisma__PersonaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   role<T extends Prisma.RoleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RoleDefaultArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  registrosInventario<T extends Prisma.Persona$registrosInventarioArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Persona$registrosInventarioArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegistroInventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1722,6 +1873,30 @@ export type PersonaDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Personas to delete.
    */
   limit?: number
+}
+
+/**
+ * Persona.registrosInventario
+ */
+export type Persona$registrosInventarioArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RegistroInventario
+   */
+  select?: Prisma.RegistroInventarioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RegistroInventario
+   */
+  omit?: Prisma.RegistroInventarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegistroInventarioInclude<ExtArgs> | null
+  where?: Prisma.RegistroInventarioWhereInput
+  orderBy?: Prisma.RegistroInventarioOrderByWithRelationInput | Prisma.RegistroInventarioOrderByWithRelationInput[]
+  cursor?: Prisma.RegistroInventarioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RegistroInventarioScalarFieldEnum | Prisma.RegistroInventarioScalarFieldEnum[]
 }
 
 /**

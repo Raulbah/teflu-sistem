@@ -59,3 +59,13 @@ export type Permiso = Prisma.PermisoModel
  * 
  */
 export type Persona = Prisma.PersonaModel
+/**
+ * Model Herramental
+ * 
+ */
+export type Herramental = Prisma.HerramentalModel
+/**
+ * Model RegistroInventario
+ * 
+ */
+export type RegistroInventario = Prisma.RegistroInventarioModel

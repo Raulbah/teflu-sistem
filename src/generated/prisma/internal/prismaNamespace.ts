@@ -387,7 +387,9 @@ export const ModelName = {
   Role: 'Role',
   Modulo: 'Modulo',
   Permiso: 'Permiso',
-  Persona: 'Persona'
+  Persona: 'Persona',
+  Herramental: 'Herramental',
+  RegistroInventario: 'RegistroInventario'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "role" | "modulo" | "permiso" | "persona"
+    modelProps: "role" | "modulo" | "permiso" | "persona" | "herramental" | "registroInventario"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +705,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Herramental: {
+      payload: Prisma.$HerramentalPayload<ExtArgs>
+      fields: Prisma.HerramentalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HerramentalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HerramentalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        findFirst: {
+          args: Prisma.HerramentalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HerramentalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        findMany: {
+          args: Prisma.HerramentalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>[]
+        }
+        create: {
+          args: Prisma.HerramentalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        createMany: {
+          args: Prisma.HerramentalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HerramentalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>[]
+        }
+        delete: {
+          args: Prisma.HerramentalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        update: {
+          args: Prisma.HerramentalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        deleteMany: {
+          args: Prisma.HerramentalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HerramentalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HerramentalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>[]
+        }
+        upsert: {
+          args: Prisma.HerramentalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HerramentalPayload>
+        }
+        aggregate: {
+          args: Prisma.HerramentalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHerramental>
+        }
+        groupBy: {
+          args: Prisma.HerramentalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HerramentalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HerramentalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HerramentalCountAggregateOutputType> | number
+        }
+      }
+    }
+    RegistroInventario: {
+      payload: Prisma.$RegistroInventarioPayload<ExtArgs>
+      fields: Prisma.RegistroInventarioFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RegistroInventarioFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RegistroInventarioFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        findFirst: {
+          args: Prisma.RegistroInventarioFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RegistroInventarioFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        findMany: {
+          args: Prisma.RegistroInventarioFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>[]
+        }
+        create: {
+          args: Prisma.RegistroInventarioCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        createMany: {
+          args: Prisma.RegistroInventarioCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RegistroInventarioCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>[]
+        }
+        delete: {
+          args: Prisma.RegistroInventarioDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        update: {
+          args: Prisma.RegistroInventarioUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        deleteMany: {
+          args: Prisma.RegistroInventarioDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RegistroInventarioUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RegistroInventarioUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>[]
+        }
+        upsert: {
+          args: Prisma.RegistroInventarioUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistroInventarioPayload>
+        }
+        aggregate: {
+          args: Prisma.RegistroInventarioAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRegistroInventario>
+        }
+        groupBy: {
+          args: Prisma.RegistroInventarioGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegistroInventarioGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RegistroInventarioCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegistroInventarioCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -797,6 +947,34 @@ export const PersonaScalarFieldEnum = {
 } as const
 
 export type PersonaScalarFieldEnum = (typeof PersonaScalarFieldEnum)[keyof typeof PersonaScalarFieldEnum]
+
+
+export const HerramentalScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  marca: 'marca',
+  img: 'img',
+  estatus: 'estatus',
+  createdAt: 'createdAt'
+} as const
+
+export type HerramentalScalarFieldEnum = (typeof HerramentalScalarFieldEnum)[keyof typeof HerramentalScalarFieldEnum]
+
+
+export const RegistroInventarioScalarFieldEnum = {
+  id: 'id',
+  herramentalId: 'herramentalId',
+  usuarioId: 'usuarioId',
+  fechaRegistro: 'fechaRegistro',
+  turno: 'turno',
+  fechaTurno: 'fechaTurno',
+  estado: 'estado',
+  observaciones: 'observaciones'
+} as const
+
+export type RegistroInventarioScalarFieldEnum = (typeof RegistroInventarioScalarFieldEnum)[keyof typeof RegistroInventarioScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -990,6 +1168,8 @@ export type GlobalOmitConfig = {
   modulo?: Prisma.ModuloOmit
   permiso?: Prisma.PermisoOmit
   persona?: Prisma.PersonaOmit
+  herramental?: Prisma.HerramentalOmit
+  registroInventario?: Prisma.RegistroInventarioOmit
 }
 
 /* Types for Logging */

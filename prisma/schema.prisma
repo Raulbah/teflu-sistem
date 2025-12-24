@@ -70,4 +70,37 @@ model Persona {
   date_create      DateTime @default(now())
   estatus          Boolean  @default(true)
   date_delete      DateTime?
+  registrosInventario RegistroInventario[] 
+}
+
+model Herramental {
+  id          Int      @id @default(autoincrement())
+  codigo      String   @unique // Código de barras o QR
+  nombre      String
+  descripcion String?
+  marca       String?
+  img         String?  // URL de Cloudinary
+  estatus     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  registros   RegistroInventario[]
+}
+
+
+model RegistroInventario {
+  id            Int         @id @default(autoincrement())
+  herramentalId Int
+  usuarioId     Int
+  fechaRegistro DateTime    @default(now())
+  
+  // Lógica de Negocio
+  turno         String      // 'DIA', 'TARDE', 'NOCHE'
+  fechaTurno    DateTime    // Fecha "contable" del turno (para manejar el turno noche que cruza días)
+  estado        String      @default("OK") // 'OK', 'FALTANTE', 'DAÑADO'
+  observaciones String?
+
+  herramental   Herramental @relation(fields: [herramentalId], references: [id])
+  usuario       Persona     @relation(fields: [usuarioId], references: [idpersona])
+
+  @@index([fechaTurno, turno])
 }

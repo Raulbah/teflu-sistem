@@ -54,7 +54,9 @@ export const ModelName = {
   Role: 'Role',
   Modulo: 'Modulo',
   Permiso: 'Permiso',
-  Persona: 'Persona'
+  Persona: 'Persona',
+  Herramental: 'Herramental',
+  RegistroInventario: 'RegistroInventario'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -128,6 +130,34 @@ export const PersonaScalarFieldEnum = {
 } as const
 
 export type PersonaScalarFieldEnum = (typeof PersonaScalarFieldEnum)[keyof typeof PersonaScalarFieldEnum]
+
+
+export const HerramentalScalarFieldEnum = {
+  id: 'id',
+  codigo: 'codigo',
+  nombre: 'nombre',
+  descripcion: 'descripcion',
+  marca: 'marca',
+  img: 'img',
+  estatus: 'estatus',
+  createdAt: 'createdAt'
+} as const
+
+export type HerramentalScalarFieldEnum = (typeof HerramentalScalarFieldEnum)[keyof typeof HerramentalScalarFieldEnum]
+
+
+export const RegistroInventarioScalarFieldEnum = {
+  id: 'id',
+  herramentalId: 'herramentalId',
+  usuarioId: 'usuarioId',
+  fechaRegistro: 'fechaRegistro',
+  turno: 'turno',
+  fechaTurno: 'fechaTurno',
+  estado: 'estado',
+  observaciones: 'observaciones'
+} as const
+
+export type RegistroInventarioScalarFieldEnum = (typeof RegistroInventarioScalarFieldEnum)[keyof typeof RegistroInventarioScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,0 +1,512 @@
+{
+  "roles": [
+    {
+      "id": 1,
+      "nombre": "Administrador",
+      "descripcion": "Podra crear, borrar y editar todo sin restricciones",
+      "estatus": true
+    },
+    {
+      "id": 2,
+      "nombre": "Supervisor",
+      "descripcion": "Gestión de personal y reportes",
+      "estatus": true
+    }
+  ],
+  "modulos": [
+    {
+      "id": 4,
+      "nombre": "Configuración",
+      "slug": "configuracion",
+      "icono": "settings",
+      "orden": 99,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 5,
+      "nombre": "Dashboard",
+      "slug": "dashboard",
+      "icono": "layout-dashboard",
+      "orden": 1,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 6,
+      "nombre": "OEE",
+      "slug": "dashboard/oee",
+      "icono": null,
+      "orden": 1,
+      "estatus": true,
+      "parentId": 5
+    },
+    {
+      "id": 7,
+      "nombre": "Disponibilidad",
+      "slug": "dashboard/disponibilidad",
+      "icono": null,
+      "orden": 2,
+      "estatus": true,
+      "parentId": 5
+    },
+    {
+      "id": 8,
+      "nombre": "Eficiencia",
+      "slug": "dashboard/eficiencia",
+      "icono": null,
+      "orden": 3,
+      "estatus": true,
+      "parentId": 5
+    },
+    {
+      "id": 9,
+      "nombre": "Calidad",
+      "slug": "dashboard/calidad",
+      "icono": null,
+      "orden": 4,
+      "estatus": true,
+      "parentId": 5
+    },
+    {
+      "id": 10,
+      "nombre": "Herramentales",
+      "slug": "inventarios/herramentales",
+      "icono": null,
+      "orden": 1,
+      "estatus": true,
+      "parentId": 2
+    },
+    {
+      "id": 11,
+      "nombre": "Mantenimiento",
+      "slug": "inventarios/mantenimiento",
+      "icono": null,
+      "orden": 2,
+      "estatus": true,
+      "parentId": 2
+    },
+    {
+      "id": 12,
+      "nombre": "Almacen",
+      "slug": "inventarios/almacen",
+      "icono": null,
+      "orden": 3,
+      "estatus": true,
+      "parentId": 2
+    },
+    {
+      "id": 3,
+      "nombre": "Gestión de Personal",
+      "slug": "personas",
+      "icono": "users",
+      "orden": 2,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 2,
+      "nombre": "Inventarios",
+      "slug": "inventarios",
+      "icono": "box",
+      "orden": 3,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 13,
+      "nombre": "Roles y Accesos",
+      "slug": "roles",
+      "icono": "shield-check",
+      "orden": 1,
+      "estatus": true,
+      "parentId": 4
+    },
+    {
+      "id": 14,
+      "nombre": "Tareas\t",
+      "slug": "tareas\t",
+      "icono": "layout-list",
+      "orden": 6,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 15,
+      "nombre": "Produccion",
+      "slug": "produccion",
+      "icono": "hard-hat",
+      "orden": 5,
+      "estatus": true,
+      "parentId": null
+    },
+    {
+      "id": 18,
+      "nombre": "Captura",
+      "slug": "produccion/captura\t",
+      "icono": null,
+      "orden": 1,
+      "estatus": true,
+      "parentId": 15
+    }
+  ],
+  "permisos": [
+    {
+      "id": 5,
+      "rolId": 1,
+      "moduloId": 13,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 9,
+      "rolId": 1,
+      "moduloId": 10,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 8,
+      "rolId": 1,
+      "moduloId": 6,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 4,
+      "rolId": 1,
+      "moduloId": 5,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 34,
+      "rolId": 1,
+      "moduloId": 18,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 10,
+      "rolId": 1,
+      "moduloId": 11,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 11,
+      "rolId": 1,
+      "moduloId": 7,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 1,
+      "rolId": 1,
+      "moduloId": 3,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 13,
+      "rolId": 1,
+      "moduloId": 12,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 14,
+      "rolId": 1,
+      "moduloId": 8,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 3,
+      "rolId": 1,
+      "moduloId": 2,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 16,
+      "rolId": 1,
+      "moduloId": 9,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 42,
+      "rolId": 1,
+      "moduloId": 15,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 43,
+      "rolId": 1,
+      "moduloId": 14,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 2,
+      "rolId": 1,
+      "moduloId": 4,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 45,
+      "rolId": 2,
+      "moduloId": 13,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 46,
+      "rolId": 2,
+      "moduloId": 10,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 47,
+      "rolId": 2,
+      "moduloId": 6,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 48,
+      "rolId": 2,
+      "moduloId": 5,
+      "canRead": true,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 49,
+      "rolId": 2,
+      "moduloId": 18,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 50,
+      "rolId": 2,
+      "moduloId": 11,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 51,
+      "rolId": 2,
+      "moduloId": 7,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 52,
+      "rolId": 2,
+      "moduloId": 3,
+      "canRead": true,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 53,
+      "rolId": 2,
+      "moduloId": 12,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 54,
+      "rolId": 2,
+      "moduloId": 8,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 55,
+      "rolId": 2,
+      "moduloId": 2,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 56,
+      "rolId": 2,
+      "moduloId": 9,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    },
+    {
+      "id": 57,
+      "rolId": 2,
+      "moduloId": 15,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 58,
+      "rolId": 2,
+      "moduloId": 14,
+      "canRead": true,
+      "canWrite": true,
+      "canUpdate": true,
+      "canDelete": true
+    },
+    {
+      "id": 59,
+      "rolId": 2,
+      "moduloId": 4,
+      "canRead": false,
+      "canWrite": false,
+      "canUpdate": false,
+      "canDelete": false
+    }
+  ],
+  "personas": [
+    {
+      "idpersona": 4,
+      "nomina": "39373\t",
+      "nombres": "Raul",
+      "apellido_paterno": "Baranda",
+      "apellido_materno": "Hernandez",
+      "puesto": "Aux. Produccion",
+      "telefono": "8661516739",
+      "email_user": "raulbh.2110@gmail.com",
+      "password": "$2b$10$EQNXDYIIdzI9EVDOG7pkK.LY3FsR2yWy5LYkYksXyAnEvNHG7ShFG",
+      "direccion": "20 de septiembre #106, col. 18 de Octubre, General Escobedo, N.L.",
+      "img": "https://res.cloudinary.com/dupkqrqfl/image/upload/v1766463147/teflu/perfiles/scyqmfggeupz2es2jxi5.jpg",
+      "rolid": 1,
+      "date_create": "2025-12-21T04:21:39.127Z",
+      "estatus": true,
+      "date_delete": "2025-12-21T18:58:18.829Z"
+    },
+    {
+      "idpersona": 5,
+      "nomina": "ADM-001",
+      "nombres": "Super",
+      "apellido_paterno": "Administrador",
+      "apellido_materno": "",
+      "puesto": "Gerente de TI",
+      "telefono": "8135160698",
+      "email_user": "admin@empresa.com",
+      "password": "$2b$10$nmYpP9wgi0LpzKVf7O1Oy.ep162xsL8qc9clmzSMYc7SYiBQPnDMG",
+      "direccion": "Oficinas Centrales",
+      "img": null,
+      "rolid": 1,
+      "date_create": "2025-12-21T04:46:04.210Z",
+      "estatus": false,
+      "date_delete": "2025-12-23T04:36:31.392Z"
+    },
+    {
+      "idpersona": 6,
+      "nomina": "39999",
+      "nombres": "Prueba1",
+      "apellido_paterno": "Apellido1",
+      "apellido_materno": null,
+      "puesto": "Operador",
+      "telefono": null,
+      "email_user": "operador@empresa.com",
+      "password": "$2b$10$DB.F0N.d13IXzZBeolGByO/CuVzYdSV2XVr4ZoBZM4rN67QAEB55W",
+      "direccion": null,
+      "img": null,
+      "rolid": 2,
+      "date_create": "2025-12-21T18:59:52.738Z",
+      "estatus": false,
+      "date_delete": "2025-12-23T04:43:57.346Z"
+    },
+    {
+      "idpersona": 8,
+      "nomina": "39995",
+      "nombres": "Miguel",
+      "apellido_paterno": "Bladimir",
+      "apellido_materno": "Sanchez",
+      "puesto": "Supervisor Produccion",
+      "telefono": "8181827879",
+      "email_user": "supervisor2@gmail.com",
+      "password": "$2b$10$OjY5L8EpqIcootTgiq0HnO.8gb5JquTeuR4J4VMcP/7SrCvNwsKHm",
+      "direccion": "",
+      "img": "https://res.cloudinary.com/dupkqrqfl/image/upload/v1766465191/teflu/perfiles/hfl7blusngxprx3iynnh.png",
+      "rolid": 2,
+      "date_create": "2025-12-23T04:46:43.273Z",
+      "estatus": true,
+      "date_delete": null
+    },
+    {
+      "idpersona": 7,
+      "nomina": "39374",
+      "nombres": "Rogelio",
+      "apellido_paterno": "Leija",
+      "apellido_materno": "Escalante",
+      "puesto": "Ing. Herramentales",
+      "telefono": "8661516739",
+      "email_user": "rogelio.leija03@gmail.com",
+      "password": "$2b$10$sTeU9oU9yPFk7BGtKA/fT.Nt/KEF2Y9mTqsClcfv65TOSaVe2AGsW",
+      "direccion": "20 de septiembre #106, col. 18 de Octubre, General Escobedo, N.L.",
+      "img": "https://res.cloudinary.com/dupkqrqfl/image/upload/v1766464761/teflu/perfiles/cnn3wbqtlqjowj7a4m4j.jpg",
+      "rolid": 1,
+      "date_create": "2025-12-23T04:39:32.921Z",
+      "estatus": true,
+      "date_delete": null
+    }
+  ]
+}
