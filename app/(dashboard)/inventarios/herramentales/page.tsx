@@ -10,7 +10,8 @@ import { HerramentalesManager } from '@/components/inventarios/HerramentalesMana
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
-// ... (HistorialHoy se queda igual) ...
+// ... imports
+
 async function HistorialHoy() {
     const registros = await prisma.registroInventario.findMany({
         take: 20,
@@ -23,35 +24,41 @@ async function HistorialHoy() {
 
     return (
         <div className="border rounded-md bg-white">
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead>Hora</TableHead>
-                        <TableHead>Herramienta</TableHead>
-                        <TableHead>Usuario</TableHead>
-                        <TableHead>Turno</TableHead>
-                        <TableHead>Estado</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {registros.map((reg) => (
-                        <TableRow key={reg.id}>
-                            <TableCell>{reg.fechaRegistro.toLocaleTimeString('es-MX', {hour: '2-digit', minute:'2-digit'})}</TableCell>
-                            <TableCell className="font-medium">{reg.herramental.nombre}</TableCell>
-                            <TableCell>{reg.usuario.nombres} {reg.usuario.apellido_paterno}</TableCell>
-                            <TableCell><Badge variant="outline">{reg.turno}</Badge></TableCell>
-                            <TableCell>
-                                <Badge className={reg.estado === 'OK' ? 'bg-green-600' : 'bg-red-600'}>
-                                    {reg.estado}
-                                </Badge>
-                            </TableCell>
+            {/* AGREGAMOS ESTE DIV WRAPPER CON overflow-x-auto */}
+            <div className="w-full overflow-x-auto max-w-[85vw] md:max-w-full">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            {/* whitespace-nowrap evita que el texto se rompa feo en móvil */}
+                            <TableHead className="whitespace-nowrap">Hora</TableHead>
+                            <TableHead className="whitespace-nowrap">Herramienta</TableHead>
+                            <TableHead className="whitespace-nowrap">Usuario</TableHead>
+                            <TableHead className="whitespace-nowrap">Turno</TableHead>
+                            <TableHead className="whitespace-nowrap">Estado</TableHead>
                         </TableRow>
-                    ))}
-                    {registros.length === 0 && (
-                        <TableRow><TableCell colSpan={5} className="text-center text-slate-500 py-8">Sin registros recientes</TableCell></TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody>
+                        {registros.map((reg) => (
+                            <TableRow key={reg.id}>
+                                <TableCell className="whitespace-nowrap">
+                                    {reg.fechaRegistro.toLocaleTimeString('es-MX', {hour: '2-digit', minute:'2-digit'})}
+                                </TableCell>
+                                <TableCell className="font-medium whitespace-nowrap">{reg.herramental.nombre}</TableCell>
+                                <TableCell className="whitespace-nowrap">{reg.usuario.nombres} {reg.usuario.apellido_paterno}</TableCell>
+                                <TableCell><Badge variant="outline">{reg.turno}</Badge></TableCell>
+                                <TableCell>
+                                    <Badge className={reg.estado === 'OK' ? 'bg-green-600' : 'bg-red-600'}>
+                                        {reg.estado}
+                                    </Badge>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                        {registros.length === 0 && (
+                            <TableRow><TableCell colSpan={5} className="text-center text-slate-500 py-8">Sin registros recientes</TableCell></TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     )
 }
@@ -89,7 +96,7 @@ export default async function InventarioPage() {
                         <div className="md:col-span-1">
                             <ScannerInput />
                         </div>
-                        <div className="md:col-span-2 space-y-2">
+                        <div className="md:col-span-2 space-y-2 min-w-0"> 
                             <h3 className="font-semibold text-slate-800">Registros Recientes</h3>
                             <HistorialHoy />
                         </div>

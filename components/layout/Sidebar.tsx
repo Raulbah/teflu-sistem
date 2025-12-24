@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet'; // Importante para Mobile
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { 
     LayoutDashboard, 
     Package, 
@@ -29,8 +29,9 @@ import { useState } from 'react';
 import { logoutAction } from '@/server/actions/auth-actions';
 import { ModuloItem } from '@/types';
 import { DeleteConfirmation } from "@/components/ui/delete-confirmation";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden"; // Opcional, para ocultar el titulo del Sheet si molesta
 
-// Mapeo de Iconos
+// Mapeo de Iconos (Igual que antes)
 const iconMap: Record<string, LucideIcon> = {
     'layout-dashboard': LayoutDashboard,
     'package': Package,
@@ -41,9 +42,6 @@ const iconMap: Record<string, LucideIcon> = {
     'hard-hat': HardHat
 };
 
-// --- SUBCOMPONENTES DE NAVEGACIÓN ---
-
-// 1. Item con Submenús (Padre)
 function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollapsed: boolean; pathname: string }) {
     const Icon = iconMap[item.icono || 'package'] || Package;
     const isActiveGroup = pathname.startsWith(`/${item.slug}`); 
@@ -114,7 +112,6 @@ function NavGroup({ item, isCollapsed, pathname }: { item: ModuloItem; isCollaps
     );
 }
 
-// 2. Item Simple (Sin hijos)
 function NavItem({ item, isCollapsed, pathname }: { item: ModuloItem; isCollapsed: boolean; pathname: string }) {
     const Icon = iconMap[item.icono || 'package'] || Package;
     const href = item.slug === 'dashboard' ? '/dashboard' : `/${item.slug}`;
@@ -156,39 +153,37 @@ function NavItem({ item, isCollapsed, pathname }: { item: ModuloItem; isCollapse
         </Link>
     );
 }
+
+
 interface SidebarProps {
-    modules: ModuloItem[]; // No any[]
+    modules: ModuloItem[];
     isCollapsed: boolean;
     toggleSidebar: () => void;
+    isMobile?: boolean; // Nuevo prop para saber si estamos en el Sheet
 }
 
 // --- COMPONENTE PRINCIPAL SIDEBAR ---
-export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
+export function Sidebar({ modules, isCollapsed, toggleSidebar, isMobile = false }: SidebarProps) {
     const pathname = usePathname();
-    
-    // 1. Estado para controlar la alerta de logout
     const [showLogoutAlert, setShowLogoutAlert] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
+
     const handleLogout = async () => {
         setIsLoggingOut(true);
-        await logoutAction(); // Tu Server Action existente
-        // No necesitamos setIsLoggingOut(false) porque la página redirigirá
+        await logoutAction();
     };
 
     return (
         <div className={cn(
             "relative flex flex-col h-full bg-white border-r border-slate-200 transition-all duration-300 ease-in-out",
-            isCollapsed ? "w-17.5" : "w-72"
+            isCollapsed ? "w-17.5" : "w-full md:w-72" // Ajuste w-full para móvil
         )}>
-            {/* Header */}
+            {/* Header del Sidebar */}
             <div className={cn(
-                "flex items-center h-16 border-b border-slate-100",
+                "flex items-center h-16 border-b border-slate-100 shrink-0", // shrink-0 evita que se aplaste
                 isCollapsed ? "justify-center" : "justify-between px-4"
             )}>
-                <div className={cn(
-                    "items-center gap-2 overflow-hidden",
-                    "hidden md:flex" 
-                )}>
+                <div className="flex items-center gap-2 overflow-hidden">
                     <div className="bg-red-600 p-1.5 rounded-lg shrink-0">
                         <Hexagon className="h-5 w-5 text-white fill-white" />
                     </div>
@@ -199,26 +194,30 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
                     )}
                 </div>
                 
-                {!isCollapsed && (
-                <Button variant="ghost" size="icon" onClick={toggleSidebar} className="hidden md:flex h-8 w-8 text-slate-400 hover:text-slate-600">
-                    <PanelLeftClose className="h-4 w-4" />
-                </Button>
+                {/* Botón de colapsar solo visible en Desktop */}
+                {!isCollapsed && !isMobile && (
+                    <Button variant="ghost" size="icon" onClick={toggleSidebar} className="hidden md:flex h-8 w-8 text-slate-400 hover:text-slate-600">
+                        <PanelLeftClose className="h-4 w-4" />
+                    </Button>
                 )}
             </div>
 
-            <ScrollArea className="flex-1 py-4">
-                <nav className="grid gap-1 px-2">
-                    {modules.map((mod) => {
-                        if (mod.children && mod.children.length > 0) {
-                        return <NavGroup key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
-                    }
-                    return <NavItem key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
-                })}
-                </nav>
-            </ScrollArea>
+            {/* ScrollArea debe ser flex-1 para ocupar el espacio restante */}
+            <div className="flex-1 overflow-hidden"> 
+                <ScrollArea className="h-full">
+                    <nav className="grid gap-1 px-2 py-4">
+                        {modules.map((mod) => {
+                            if (mod.children && mod.children.length > 0) {
+                                return <NavGroup key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
+                            }
+                            return <NavItem key={mod.id} item={mod} isCollapsed={isCollapsed} pathname={pathname} />;
+                        })}
+                    </nav>
+                </ScrollArea>
+            </div>
 
-            <div className="p-2 border-t border-slate-100">
-                {/* Quitamos el <form> y usamos onClick directo */}
+            {/* Footer con Logout (Siempre al fondo) */}
+            <div className="p-2 border-t border-slate-100 shrink-0">
                 <Button 
                     variant="ghost" 
                     className={cn("w-full text-red-500 hover:text-red-600 hover:bg-red-50", isCollapsed ? "justify-center" : "justify-start gap-3")}
@@ -229,53 +228,56 @@ export function Sidebar({ modules, isCollapsed, toggleSidebar }: SidebarProps) {
                 </Button>
             </div>
             
-            {/* Botón flotante para expandir si está colapsado */}
-            {isCollapsed && (
+            {/* Botón flotante para expandir (Desktop) */}
+            {isCollapsed && !isMobile && (
                 <div className="absolute -right-3 top-20 hidden md:block">
-                <Button 
-                    onClick={toggleSidebar}
-                    variant="outline" 
-                    size="icon" 
-                    className="h-6 w-6 rounded-full shadow-md bg-white border-slate-200 text-slate-500 hover:text-blue-600"
-                >
-                    <ChevronRight className="h-3 w-3" />
-                </Button>
+                    <Button 
+                        onClick={toggleSidebar}
+                        variant="outline" 
+                        size="icon" 
+                        className="h-6 w-6 rounded-full shadow-md bg-white border-slate-200 text-slate-500 hover:text-blue-600"
+                    >
+                        <ChevronRight className="h-3 w-3" />
+                    </Button>
                 </div>
             )}
+
             <DeleteConfirmation 
                 open={showLogoutAlert}
                 onOpenChange={setShowLogoutAlert}
                 onConfirm={handleLogout}
                 isDeleting={isLoggingOut}
                 title="¿Cerrar Sesión?"
-                description="Tendrás que ingresar tus credenciales nuevamente para acceder al sistema."
+                description="Tendrás que ingresar tus credenciales nuevamente."
                 confirmText="Sí, salir"
-                variant="default" // O 'destructive' si prefieres rojo
+                variant="default" 
             />
         </div>
     );
 }
 
-// --- COMPONENTE MOBILE SIDEBAR (EL QUE FALTABA) ---
+// --- COMPONENTE MOBILE SIDEBAR ---
 export function MobileSidebar({ modules }: { modules: ModuloItem[] }) {
     const [open, setOpen] = useState(false);
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-6 w-6 text-slate-600" />
-            </Button>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                    <Menu className="h-6 w-6 text-slate-600" />
+                </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="p-0 w-72">
-            <SheetHeader className="px-4 py-4 border-b text-left">
-                <SheetTitle>Menú Principal</SheetTitle>
-            </SheetHeader>
-            {/* Reutilizamos el Sidebar pero forzamos isCollapsed={false} */}
-            <Sidebar 
-                modules={modules} 
-                isCollapsed={false} 
-                toggleSidebar={() => setOpen(false)} 
-            />
+            <SheetContent side="left" className="p-0 w-72 flex flex-col h-full" aria-describedby={undefined}>
+                <VisuallyHidden.Root>
+                    <SheetTitle>Menú de Navegación</SheetTitle>
+                    <SheetDescription>Opciones del sistema</SheetDescription>
+                </VisuallyHidden.Root>
+
+                <Sidebar 
+                    modules={modules} 
+                    isCollapsed={false} 
+                    toggleSidebar={() => setOpen(false)} 
+                    isMobile={true}
+                />
             </SheetContent>
         </Sheet>
     );
